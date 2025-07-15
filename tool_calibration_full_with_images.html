@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tool Calibration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 15px;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      text-align: center;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+    .section {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #result {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Tool Calibration Input</h2>
+<img src="instruction_image_1.jpg" alt="Include Coupler if Equipped">
+<img src="instruction_image_2.jpg" alt="Tool Calibration Diagram">
+<img src="reference_image_resized.jpg" alt="Measurement Points Diagram">
+
+<div class="section">
+  <h3>📏 Measurements (mm)</h3>
+  <label>Length G-H: <input type="number" id="gh"></label>
+  <label>Length G-J: <input type="number" id="gj"></label>
+  <label>Length G-Q: <input type="number" id="gq"></label>
+  <label>Length J-Q: <input type="number" id="jq"></label>
+  <label>Length J-Z: <input type="number" id="jz"></label>
+  <label>Bucket Width: <input type="number" id="width"></label>
+  <label>Length J-J1 Original: <input type="number" id="jj1_original"></label>
+  <label>Length J-J1 Current: <input type="number" id="jj1_current"></label>
+  <label>Angle HG-J (°): <input type="number" id="angle_hgj"></label>
+  <label>Angle GJ-J1 (°): <input type="number" id="angle_gjj1"></label>
+</div>
+
+<div class="section">
+  <h3>⚖️ Weights</h3>
+  <label>Weight Bucket (lbs): <input type="number" id="wbucket" value="740"></label>
+  <label>Weight Thumb (lbs): <input type="number" id="wthumb" value="628"></label>
+  <label>Weight Coupler (lbs): <input type="number" id="wcoupler" value="619"></label>
+  <button onclick="calculate()">✅ Calculate Total Weight</button>
+  <p id="result"></p>
+</div>
+
+<script>
+  function calculate() {
+    const wb = parseFloat(document.getElementById('wbucket').value) || 0;
+    const wt = parseFloat(document.getElementById('wthumb').value) || 0;
+    const wc = parseFloat(document.getElementById('wcoupler').value) || 0;
+    const totalLbs = wb + wt + wc;
+    const totalKg = totalLbs * 0.453592;
+
+    document.getElementById('result').innerHTML = 
+      `Total: <br> <strong>${totalLbs.toFixed(0)} lbs</strong> | <strong>${totalKg.toFixed(2)} kg</strong>`;
+  }
+</script>
+
+</body>
+</html>
